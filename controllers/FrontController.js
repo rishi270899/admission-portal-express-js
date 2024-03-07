@@ -1,3 +1,5 @@
+const UserModel = require('../models/user');
+const teacherModel = require('../models/teacher');
 class FrontController {
   static login = async (req, res) => {
     try {
