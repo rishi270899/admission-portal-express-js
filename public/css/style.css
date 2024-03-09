@@ -18,17 +18,98 @@
 
 
 .card-body button {
-    
+
     transition: all .5s ease-out;
 
 }
+
 .card-body button:hover {
     background-position: left bottom;
     background-color: #39414C;
+
+}
+
+.my-amity-detail {
+    background: #006690;
+    width: 100%;
+    height: 80vh;
+}
+
+
+
+/* about page css start */
+
+@media (max-width: 480px) and (min-width: 200px) {
+    .fontset .responsive-font {
+        font-size: 20px;
+
+    }
+}
+
+
+
+@media (max-width: 767px) and (min-width: 320px) {
+
+    .fontC .fontH {
+        padding-left: 10px;
+    }
+}
+
+.ranking {
+    background: #0e385f;
+    color: #FFF;
+}
+
+.bullet {
+    margin: 20px 0;
+
+}
+.bullet li{
+    list-style: none;
+    position: relative;
+}
+.bullet li::before{
+    content: '\2022';
+    color: #dba921;
+    left: 0;
     
 }
-.my-amity-detail{
-background: #006690;
-width: 100%;
-height: 80vh;
+
+.pl-4 {
+    padding-left: 1.5rem !important;
 }
+
+.pr-4 {
+    padding-right: 1.5rem !important;
+}
+
+.bullet li {
+    line-height: 2.5;
+    text-align: justify;
+    padding-bottom: 5px;
+}
+/* about page css end */
+
+/*footer css start*/
+ 
+.no-bullets li{
+    list-style: none;
+   
+}
+.no-bullets li a{
+    text-decoration: none;
+    font-size: 14px;
+    color: #999;
+    padding-bottom: 10px;
+    display: table;
+    
+}
+.no-bullets li a:hover{
+    text-decoration: underline;
+    color: #FFF;
+}
+
+.list-inline-item a{
+    padding-left: 15px;
+}
+/*footer css end*/
