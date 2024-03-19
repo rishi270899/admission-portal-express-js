@@ -7,6 +7,26 @@ const connectDB = require("./db/connectDB");
 // connect DB
 connectDB();
 
+// connect flash and session
+const session = require("express-session");
+const flash = require("connect-flash");
+//message
+app.use(
+  session({
+    secret: "secret",
+    cookies: { maxAge: 6000 },
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+//Flash message
+app.use(flash());
+
+// data get
+// parse application/x - www-form-urlencoded
+app.use(express.urlencoded({ extended: false }));
+
 // ejs set html css
 app.set("view engine", "ejs");
 
