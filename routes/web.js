@@ -14,5 +14,6 @@ route.get("/team", FrontController.team);
 // insert user data
 
 route.post("/insertuser", FrontController.insertUser);
+route.post("/verifyLogin",FrontController.verifyLogin)
 
 module.exports = route;

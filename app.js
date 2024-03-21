@@ -7,6 +7,12 @@ const connectDB = require("./db/connectDB");
 // connect DB
 connectDB();
 
+//image upload
+const fileupload = require("express-fileupload");
+
+//tempfiles upload
+app.use(fileupload({ useTempFiles: true }));
+
 // connect flash and session
 const session = require("express-session");
 const flash = require("connect-flash");
