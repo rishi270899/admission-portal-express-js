@@ -2,6 +2,7 @@ const UserModel = require("../models/user");
 const teacherModel = require("../models/teacher");
 const bcrypt = require("bcrypt");
 const cloudinary = require("cloudinary");
+const jwt = require("jsonwebtoken");
 
 cloudinary.config({
   cloud_name: "dyxjmoreb",
@@ -30,7 +31,8 @@ class FrontController {
 
   static home = async (req, res) => {
     try {
-      res.render("home");
+      const { name, email, image } = req.data;
+      res.render("home", { n: name, i: image });
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +40,8 @@ class FrontController {
 
   static about = async (req, res) => {
     try {
-      res.render("about");
+      const { name, email, image } = req.data;
+      res.render("about", { n: name, i: image });
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +49,8 @@ class FrontController {
 
   static contact = async (req, res) => {
     try {
-      res.render("contact");
+      const { name, email, image } = req.data;
+      res.render("contact", { n: name, i: image });
     } catch (error) {
       console.log(error);
     }
@@ -106,7 +110,7 @@ class FrontController {
     }
   };
 
-  // verify login data 
+  // verify login data
   static verifyLogin = async (req, res) => {
     try {
       // console.log(req.body)
@@ -117,6 +121,10 @@ class FrontController {
         const ismatch = await bcrypt.compare(password, user.password);
         // console.log(ismatch)
         if (ismatch) {
+          // token
+          const token = jwt.sign({ ID: user._id }, "rishigoyal@27");
+          // console.log(token);
+          res.cookie("token", token);
           res.redirect("/home");
         } else {
           req.flash("error", "Email or Password not valid");
@@ -126,6 +134,15 @@ class FrontController {
         req.flash("error", "Not Registered Email");
         res.redirect("/");
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static logout = async (req, res) => {
+    try {
+      res.clearCookie("token");
+      res.redirect("/");
     } catch (error) {
       console.log(error);
     }

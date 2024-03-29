@@ -3,6 +3,10 @@ const app = express();
 const port = 3000;
 const web = require("./routes/web");
 const connectDB = require("./db/connectDB");
+const cookieParser = require("cookie-parser");
+
+//token get
+app.use(cookieParser());
 
 // connect DB
 connectDB();
