@@ -32,7 +32,7 @@ class FrontController {
   static home = async (req, res) => {
     try {
       const { name, email, image } = req.data;
-      res.render("home", { n: name, i: image });
+      res.render("home", { n: name, i: image, e:email });
     } catch (error) {
       console.log(error);
     }
@@ -150,3 +150,4 @@ class FrontController {
 }
 
 module.exports = FrontController;
+
