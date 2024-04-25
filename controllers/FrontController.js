@@ -1,5 +1,6 @@
 const UserModel = require("../models/user");
 const teacherModel = require("../models/teacher");
+const CourseModel = require("../models/course")
 const bcrypt = require("bcrypt");
 const cloudinary = require("cloudinary");
 const jwt = require("jsonwebtoken");
@@ -31,8 +32,14 @@ class FrontController {
 
   static home = async (req, res) => {
     try {
-      const { name, email, image } = req.data;
-      res.render("home", { n: name, i: image, e:email });
+      const { name, email, image, id, role } = req.data;
+      const btech = await CourseModel.findOne({
+        user_id: id,
+        course: "B.Tech",
+      });
+      const bca = await CourseModel.findOne({ user_id: id, course: "BCA" });
+      const mca = await CourseModel.findOne({ user_id: id, course: "MCA" });
+      res.render("home", { n: name, i: image, e: email,btech:btech,bca:bca,mca:mca,r:role });
     } catch (error) {
       console.log(error);
     }
@@ -147,7 +154,16 @@ class FrontController {
       console.log(error);
     }
   };
+
+  //profile
+  static profile = async (req, res) => {
+    try {
+      const { name, email, image } = req.data;
+      res.render("profile", { n: name, i: image });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 module.exports = FrontController;
-

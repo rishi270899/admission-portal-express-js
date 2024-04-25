@@ -17,24 +17,47 @@
 }
 
 
-.card-body button {
 
-    transition: all .5s ease-out;
+/* navbar css start */
+
+.navbar-toggler-icon {
+    color: white; /* Change to your desired color */
+}
+
+
+.fadeIn a {
+    color: white;
+    position: relative;
+    display: inline-block;
+    font-weight: 500;
 
 }
 
-.card-body button:hover {
-    background-position: left bottom;
-    background-color: #39414C;
+.fadeIn a:hover {
+    color: black;
+    background: #dba921;
+    border-radius: 15px;
+    transition: 0.7s;
 
 }
 
-.my-amity-detail {
-    background: #006690;
-    width: 100%;
-    height: 80vh;
+.fadeIn2 a:hover {
+    background: #dba921;
+    border-radius: 0;
+    transition: 0.7s;
+    height: 100%;
+
 }
 
+/* navbar css end */
+
+
+
+/* home css start */
+
+
+
+/* home css end */
 
 
 /* about page css start */
@@ -64,15 +87,17 @@
     margin: 20px 0;
 
 }
-.bullet li{
+
+.bullet li {
     list-style: none;
     position: relative;
 }
-.bullet li::before{
+
+.bullet li::before {
     content: '\2022';
     color: #dba921;
     left: 0;
-    
+
 }
 
 .pl-4 {
@@ -88,28 +113,40 @@
     text-align: justify;
     padding-bottom: 5px;
 }
+
 /* about page css end */
 
+
+
+/* contact css start */
+
+
+
+/* contact css end */
+
 /*footer css start*/
- 
-.no-bullets li{
+
+.no-bullets li {
     list-style: none;
-   
+
 }
-.no-bullets li a{
+
+.no-bullets li a {
     text-decoration: none;
     font-size: 14px;
     color: #999;
     padding-bottom: 10px;
     display: table;
-    
+
 }
-.no-bullets li a:hover{
+
+.no-bullets li a:hover {
     text-decoration: underline;
     color: #FFF;
 }
 
-.list-inline-item a{
+.list-inline-item a {
     padding-left: 15px;
 }
+
 /*footer css end*/
