@@ -10,7 +10,7 @@ const checkUseAuth = async (req, res, next) => {
     res.redirect("/");
   } else {
     const verifyLogin = jwt.verify(token, "rishigoyal@27");
-    console.log(verifyLogin);
+    // console.log(verifyLogin);
     const data = await UserModel.findOne({ _id: verifyLogin.ID });
     // console.log(data)
     req.data = data;

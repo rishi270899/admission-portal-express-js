@@ -1,0 +1,23 @@
+<thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Course</th>
+        <th>Status</th>
+        <th>Comment</th>
+        <th></th>
+        <th>Action</th>
+    </tr>
+</thead>
+
+<td>
+    <form action="/update_status/<%= item._id %>" method="post">
+        <textarea name="comment" class="form-control"></textarea>
+        <input type="hidden" name="name" value="<%= item.name %>">
+        <input type="hidden" name="email" value="<%= item.email %>">
+</td>
+<td>
+    <button type="submit" name="status" class="btn btn-success" value="Approved">Approved</button>
+    <button type="submit" name="status" class="btn btn-danger" value="Reject">Reject</button>
+    </form>
+</td>

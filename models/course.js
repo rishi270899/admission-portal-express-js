@@ -16,7 +16,7 @@ const CourseSchema = new mongoose.Schema(
     },
     dob: {
       type: String,
-      default: true,
+      require: true,
     },
     address: {
       type: String,
@@ -48,7 +48,7 @@ const CourseSchema = new mongoose.Schema(
     },
   },
   { timestamps: true }
-); 
+); // jb hum insert karenge to 2 field dega
 
 const CourseModel = mongoose.model("course", CourseSchema);
 
