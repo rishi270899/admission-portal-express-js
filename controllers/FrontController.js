@@ -6,6 +6,7 @@ const cloudinary = require("cloudinary");
 const jwt = require("jsonwebtoken");
 const nodeMailer = require("nodemailer");
 const randomstring = require("randomstring");
+const { RollerSkating } = require("@mui/icons-material");
 
 cloudinary.config({
   cloud_name: "dyxjmoreb",
@@ -42,13 +43,13 @@ class FrontController {
       const bca = await CourseModel.findOne({ user_id: id, course: "BCA" });
       const mca = await CourseModel.findOne({ user_id: id, course: "MCA" });
       res.render("home", {
-        n: name,
-        i: image,
-        e: email,
+        name: name,
+        image: image,
+        email: email,
         btech: btech,
         bca: bca,
         mca: mca,
-        r: role,
+        role: role,
       });
     } catch (error) {
       console.log(error);
@@ -58,7 +59,7 @@ class FrontController {
   static about = async (req, res) => {
     try {
       const { name, email, image } = req.data;
-      res.render("about", { n: name, i: image });
+      res.render("about", { name: name, image: image });
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +68,7 @@ class FrontController {
   static contact = async (req, res) => {
     try {
       const { name, email, image } = req.data;
-      res.render("contact", { n: name, i: image });
+      res.render("contact", { name: name, image: image });
     } catch (error) {
       console.log(error);
     }
@@ -99,20 +100,20 @@ class FrontController {
       const imageUpload = await cloudinary.uploader.upload(file.tempFilePath, {
         folder: "userprofile",
       });
-      console.log(imageUpload);
-      const { n, e, p, cp } = req.body;
-      const user = await UserModel.findOne({ email: e });
+      // console.log(imageUpload);
+      const { name, email, password, confirmPassword } = req.body;
+      const user = await UserModel.findOne({ email: email });
       // console.log(user)
       if (user) {
         req.flash("error", "Email Already Exits.");
         res.redirect("/register");
       } else {
-        if (n && e && p && cp) {
-          if (p == cp) {
-            const hashPassword = await bcrypt.hash(p, 10);
+        if (name && email && password && confirmPassword) {
+          if (password == confirmPassword) {
+            const hashPassword = await bcrypt.hash(password, 10);
             const result = new UserModel({
-              name: n,
-              email: e,
+              name: name,
+              email: email,
               password: hashPassword,
               image: {
                 public_id: imageUpload.public_id,
@@ -121,15 +122,17 @@ class FrontController {
             });
             const userdata = await result.save();
             if (userdata) {
-              var token = jwt.sign({ ID: user._id }, "rishigoyal@27");
+              var token = jwt.sign({ ID: userdata._id }, "rishigoyal@27");
+
+              // var token = jwt.sign({ ID: user._id }, "rishigoyal@27");
               // console.log(token)
               res.cookie("Token", token);
-              // res.redirect("admin/dashboard");
+              this.sendVerifymail(name, email, userdata._id);
+              req.flash("error", "Registration Success! Please Login");
+              res.redirect("/register");
             }
-            req.flash("error", "Registration Success! Please Login");
-            res.redirect("/register"); // url
           } else {
-            req.flash("error", "password not match");
+            req.flash("error", "Not Register");
             res.redirect("/register");
           }
         } else {
@@ -142,79 +145,36 @@ class FrontController {
     }
   };
 
-  // verify login data
-  // static verifyLogin = async (req, res) => {
-  //   try {
-  //     // console.log(req.body)
-  //     const { email, password } = req.body;
-  //     const user = await UserModel.findOne({ email: email });
-  //     // console.log(user);
-  //     if (user != null) {
-  //       const ismatch = await bcrypt.compare(password, user.password);
-  //       // console.log(ismatch)
-  //       if (ismatch) {
-  //         if(user.role == 'user'){
-  //           const token = jwt.sign({ ID: user._id }, "rishigoyal@27");
-  //           // console.log(token);
-  //           res.cookie("token", token);
-  //           res.redirect("/home");
-  //         }
-  //       if (ismatch) {
-  //         if(user.role == 'user'){
-  //           const token = jwt.sign({ ID: user._id }, "rishigoyal@27");
-  //           // console.log(token);
-  //           res.cookie("token", token);
-  //           res.redirect("/admin/dashboard");
-  //         }
-  //         // token
-  //         const token = jwt.sign({ ID: user._id }, "rishigoyal@27");
-  //         // console.log(token);
-  //         res.cookie("token", token);
-  //         res.redirect("/home");
-  //       } else {
-  //         req.flash("error", "Email or Password not valid");
-  //         res.redirect("/");
-  //       }
-  //     } else {
-  //       req.flash("error", "Not Registered Email");
-  //       res.redirect("/");
-  //     }
-  //    } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   static verifyLogin = async (req, res) => {
     try {
-      //console.log(req.body)
+      // console.log(req.body)
       const { email, password } = req.body;
       const user = await UserModel.findOne({ email: email });
       // console.log(user)
       if (user != null) {
-        const ismatch = await bcrypt.compare(password, user.password);
-        // console.log(ismatch)
-        if (ismatch) {
+        const isMatch = await bcrypt.compare(password, user.password);
+        // console.log(isMatch)
+        if (isMatch) {
           if (user.role == "user" && user.is_verified == 1) {
-            const token = jwt.sign({ ID: user._id }, "rishigoyal@27");
-            //console.log(token)
-            res.cookie("token", token);
+            var token = jwt.sign({ ID: user._id }, "rishigoyal@27");
+            // console.log(token)
+            res.cookie("Token", token);
             res.redirect("/home");
           } else if (user.role == "admin" && user.is_verified == 1) {
-            const token = jwt.sign({ ID: user._id }, "rishigoyal@27");
-            //console.log(token)
-            res.cookie("token", token);
-            res.redirect("/admin/dashboard");
+            var token = jwt.sign({ ID: user._id }, "rishigoyal@27");
+            // console.log(token)
+            res.cookie("Token", token);
+            res.redirect("admin/dashboard");
           } else {
-            req.flash("error", "please verify your email address.");
+            req.flash("error", "Please verify your email address.");
             res.redirect("/");
           }
-          //token
         } else {
-          req.flash("error", "Email or password is not valid.");
+          req.flash("error", "Invalid Username & Password.");
           res.redirect("/");
         }
       } else {
-        req.flash("error", "you are not a register user.");
+        req.flash("error", "You are not a registered user.");
         res.redirect("/");
       }
     } catch (error) {
@@ -222,7 +182,6 @@ class FrontController {
     }
   };
 
-  // profile
   static profile = (req, res) => {
     try {
       const { name, email, image } = req.data;
@@ -307,7 +266,7 @@ class FrontController {
     }
   };
 
-  static sendVerifymail = async (n, e, user_id) => {
+  static sendVerifymail = async (name, email, user_id) => {
     //console.log(name, email, user_id);
     // connenct with the smtp server
 
@@ -316,18 +275,18 @@ class FrontController {
       port: 587,
 
       auth: {
-        user: "shivasengar08@gmail.com",
+        user: "rishig516@gmail.com",
         pass: "tzciiqmckalntdtr",
       },
     });
     let info = await transporter.sendMail({
       from: "test@gmail.com", // sender address
-      to: e, // list of receivers
+      to: email, // list of receivers
       subject: "For Verification mail", // Subject line
       text: "hello", // plain text body
       html:
         "<p>Hii " +
-        n +
+        name +
         ',Please click here to <a href="http://localhost:3000/verify?id=' +
         user_id +
         '">Verify</a>Your mail</p>.',
@@ -384,7 +343,7 @@ class FrontController {
       port: 587,
 
       auth: {
-        user: "shivasengar08@gmail.com",
+        user: "rishig516@gmail.com",
         pass: "tzciiqmckalntdtr",
       },
     });

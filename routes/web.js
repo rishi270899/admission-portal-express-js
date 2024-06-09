@@ -1,12 +1,12 @@
 const express = require("express");
 const FrontController = require("../controllers/FrontController");
+const CourseController = require("../controllers/CourseController");
 const route = express.Router();
 const checkUseAuth = require("../middleware/auth");
-const CourseController = require("../controllers/CourseController");
 const adminRole = require("../middleware/adminRole");
 const AdminController = require("../controllers/AdminController");
 const authRoles = require("../middleware/adminRole");
-const isLogin = require("../controllers/AdminController");
+const isLogin = require("../middleware/isLogin");
 
 //route localhost:3000('/')
 route.get("/", isLogin, FrontController.login);
@@ -43,7 +43,9 @@ route.get("/courseDel/:id", checkUseAuth, CourseController.courseDel);
 route.post("/courseUpdate/:id", checkUseAuth, CourseController.courseUpdate);
 
 //admin part
+// route.get("/admin/dashboard",checkUseAuth,authRoles("admin"),AdminController.dashboard);
 route.get("/admin/dashboard",checkUseAuth,authRoles("admin"),AdminController.dashboard);
+
 route.get("/admin/courseDisplay",checkUseAuth,authRoles("admin"),AdminController.display);
 route.get("/adminView/:id",checkUseAuth,authRoles("admin"),AdminController.adminView);
 route.get("/adminEdit/:id",checkUseAuth,authRoles("admin"),AdminController.adminEdit);~
