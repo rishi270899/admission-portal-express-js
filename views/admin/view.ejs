@@ -1,45 +1,39 @@
-<%- include("../header.ejs") %>
-<br><br><br>
+<%- include("./header.ejs") %>
+<%- include("./sidebar.ejs") %>
+
 <h1 class="text-center mt-5">Course View</h1>
 <div class="container">
     <table class="table table-bordered">
         <tr>
-            <th>Id</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Email</th>
             <th>Course</th>
-            <th>Phone</th>
-            <th>dob</th>
-            <th>address</th>
+            <th>phone</th>
             <th>gender</th>
-            <th>Course</th>
+            <th>education</th>
+            <th>address</th>
+            <th>dob</th>
+           
         </tr>
+        
         <tr>
             <td><%= d.id %></td>
             <td><%= d.name %></td>
             <td><%= d.email %></td>
             <td><%= d.course %></td>
             <td><%= d.phone %></td>
-            <td><%= d.dob %></td>
-            <td><%= d.address %></td>
             <td><%= d.gender %></td>
-            <td><%= d.course %></td>
-           
+            <td><%= d.education %></td>
+            <td><%= d.address %></td>
+            <td><%= d.dob %></td>
         </tr>
-    
-           
-
-      
-        
-
     </table>
 
-</div><!--container end-->
+</div> <!--container end-->
 
 <center>
-    <a href="/courseDisplay" class="btn btn-info">Back</a>
+    <a href="/admin/courseDisplay" class="btn btn-info">back</a>
 </center>
 
-
-
-<%- include("../footer.ejs") %>
+<%- include ("./footer.ejs") %>

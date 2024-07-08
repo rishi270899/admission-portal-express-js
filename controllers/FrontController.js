@@ -1,12 +1,11 @@
 const UserModel = require("../models/user");
-const teacherModel = require("../models/teacher");
+const TeacherModel = require("../models/teacher");
 const CourseModel = require("../models/course");
 const bcrypt = require("bcrypt");
 const cloudinary = require("cloudinary");
 const jwt = require("jsonwebtoken");
 const nodeMailer = require("nodemailer");
 const randomstring = require("randomstring");
-const { RollerSkating } = require("@mui/icons-material");
 
 cloudinary.config({
   cloud_name: "dyxjmoreb",
@@ -40,6 +39,10 @@ class FrontController {
         user_id: id,
         course: "B.Tech",
       });
+      const mtech = await CourseModel.findOne({
+        user_id: id,
+        course: "M.Tech",
+      });
       const bca = await CourseModel.findOne({ user_id: id, course: "BCA" });
       const mca = await CourseModel.findOne({ user_id: id, course: "MCA" });
       res.render("home", {
@@ -69,15 +72,6 @@ class FrontController {
     try {
       const { name, email, image } = req.data;
       res.render("contact", { name: name, image: image });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  static logout = async (req, res) => {
-    try {
-      res.clearCookie("Token");
-      res.redirect("/");
     } catch (error) {
       console.log(error);
     }
@@ -122,17 +116,22 @@ class FrontController {
             });
             const userdata = await result.save();
             if (userdata) {
-              var token = jwt.sign({ ID: userdata._id }, "rishigoyal@27");
+              const token = jwt.sign({ ID: userdata._id }, "rishigoyal@27");
 
               // var token = jwt.sign({ ID: user._id }, "rishigoyal@27");
               // console.log(token)
-              res.cookie("Token", token);
+              res.cookie("token", token);
               this.sendVerifymail(name, email, userdata._id);
               req.flash("error", "Registration Success! Please Login");
               res.redirect("/register");
             }
+            req.flash("success", "Register success plz login.");
+            res.redirect("/"); // url
           } else {
-            req.flash("error", "Not Register");
+            req.flash(
+              "error",
+              "confirm password does not match with password."
+            );
             res.redirect("/register");
           }
         } else {
@@ -156,14 +155,14 @@ class FrontController {
         // console.log(isMatch)
         if (isMatch) {
           if (user.role == "user" && user.is_verified == 1) {
-            var token = jwt.sign({ ID: user._id }, "rishigoyal@27");
+            const token = jwt.sign({ ID: user._id }, "rishigoyal@27");
             // console.log(token)
-            res.cookie("Token", token);
+            res.cookie("token", token);
             res.redirect("/home");
           } else if (user.role == "admin" && user.is_verified == 1) {
-            var token = jwt.sign({ ID: user._id }, "rishigoyal@27");
+            const token = jwt.sign({ ID: user._id }, "rishigoyal@27");
             // console.log(token)
-            res.cookie("Token", token);
+            res.cookie("token", token);
             res.redirect("admin/dashboard");
           } else {
             req.flash("error", "Please verify your email address.");
@@ -182,10 +181,19 @@ class FrontController {
     }
   };
 
+  static logout = async (req, res) => {
+    try {
+      res.clearCookie("token");
+      res.redirect("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   static profile = (req, res) => {
     try {
       const { name, email, image } = req.data;
-      res.render("profile", { n: name, i: image, e: email });
+      res.render("profile", { name: name, image: image, email: email });
     } catch (error) {
       console.log(error);
     }
@@ -276,7 +284,7 @@ class FrontController {
 
       auth: {
         user: "rishig516@gmail.com",
-        pass: "tzciiqmckalntdtr",
+        pass: "srvh mmnf vumu bcyr",
       },
     });
     let info = await transporter.sendMail({
@@ -344,7 +352,7 @@ class FrontController {
 
       auth: {
         user: "rishig516@gmail.com",
-        pass: "tzciiqmckalntdtr",
+        pass: "srvh mmnf vumu bcyr",
       },
     });
     let info = await transporter.sendMail({

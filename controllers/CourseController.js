@@ -13,14 +13,15 @@ class CourseController {
         phone: phone,
         dob: dob,
         gender: gender,
-        address: address,
         education: education,
+        address: address,
+
         course: course,
         user_id: id,
       });
       await result.save();
       this.sendMail(name, course, email);
-      res.redirect("/Display");
+      res.redirect("/courseDisplay");
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +31,7 @@ class CourseController {
     try {
       const { id } = req.data;
       const { name, email, image } = req.data;
-      const data = await CourseModel.find({user_id:id});
+      const data = await CourseModel.find({ user_id: id });
       // console.log(data)
       res.render("course/display", {
         name: name,
@@ -79,30 +80,30 @@ class CourseController {
     }
   };
 
-  static courseUpdate = async(req,res)=>{
+  static courseUpdate = async (req, res) => {
     try {
-       console.log(req.body)
-       // console.log(req.params.id)
-       const { id } = req.data
-       const { name, email, phone,dob , gender, education, course } = req.body
-       const update = await CourseModel.findByIdAndUpdate(req.params.id,{
-          name: name,
-          email: email,
-          phone: phone,
-          dob: dob,
-          address: address,
-          gender: gender,
-          education: education,
-          course: course,
-          user_id: id
-       })
-       req.flash("success", "Course Updated Successfully")
-       res.redirect("/courseDisplay")
+      console.log(req.body);
+      // console.log(req.params.id)
+      const { id } = req.data;
+      const { name, email, phone, dob, gender, education, course } = req.body;
+      const update = await CourseModel.findByIdAndUpdate(req.params.id, {
+        name: name,
+        email: email,
+        phone: phone,
+        dob: dob,
+        address: address,
+        gender: gender,
+        education: education,
+        course: course,
+        user_id: id,
+      });
+      req.flash("success", "Course Updated Successfully");
+      res.redirect("/courseDisplay");
     } catch (error) {
-       
+      console.log(error);
     }
- }
-  static courseDel = async (req, res) => {
+  };
+  static courseDelete = async (req, res) => {
     try {
       const data = await CourseModel.findByIdAndDelete(req.params.id);
       req.flash("success", "Course Delete Successfully");
@@ -112,8 +113,7 @@ class CourseController {
     }
   };
 
-
-  static sendEmail = async (name, course) => {
+  static sendEmail = async (name, course,email) => {
     // console.log(name,email,status,comment)
     // connenct with the smtp server
 
@@ -123,7 +123,7 @@ class CourseController {
 
       auth: {
         user: "rishig516@gmail.com",
-        pass: "pczoedsfgcabdino",
+        pass: "srvh mmnf vumu bcyr",
       },
     });
     let info = await transporter.sendMail({

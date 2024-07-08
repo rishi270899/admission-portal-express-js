@@ -42,15 +42,15 @@
                 <h1>B-Tech</h1>
                 <p>B Tech or Bachelor of Technology is a 4-year undergraduate academic degree program
                 </p>
-                <% if(btech) {
-                   %> 
-                   <a href="/courseDisplay" class="btn btn-light" style="color: white; background-color: #006690;"> Course Display</a>
-              <%  } else {
-                 %> 
-                <button class="btn btn-light" style="color: white; background-color: #006690;" data-bs-toggle="modal" data-bs-target="#btech" >Register</button>
+                <% if(btech) { %>
+                  <a href="/courseDisplay" class="btn btn-light" style="color: white; background-color: #006690;">
+                    Course Display</a>
+                  <% } else { %>
+                    <button class="btn btn-light" style="color: white; background-color: #006690;"
+                      data-bs-toggle="modal" data-bs-target="#btech">Register</button>
 
-              <% } %>
- 
+                    <% } %>
+
               </center>
             </div>
           </div>
@@ -128,75 +128,68 @@
   </div>
   <!--course registration page end-->
 
-<!--btech model-->
-<!-- Btech modal -->
-<div class="modal fade" id="btech">
+  <!--btech model-->
+  <!-- Btech modal -->
+  <div class="modal fade" id="btech">
     <div class="modal-dialog modal-md card">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title ">Registration form</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title ">Registration form</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <!-- modal header ends -->
+        <div class="modal-body">
+          <h4 class="text-center bg-dark text-white">B.Tech</h4>
+          <form action="/CourseInsert" method="post" enctype="multipart/form-data">
+            <div class="mb-2">
+              <label for="">Name</label>
+              <input type="text" name="name" value="<%= name %>" id="" class="form-control" autocomplete="off" required>
             </div>
-            <!-- modal header ends -->
-            <div class="modal-body">
-                <h4 class="text-center bg-dark text-white">B.Tech</h4>
-                <form action="/CourseInsert" method="post" enctype="multipart/form-data">
-                    <div class="mb-2">
-                        <label for="">Name</label>
-                        <input type="text" name="name" value="<%= n %>" id=""
-                            class="form-control" autocomplete="off" required>
-                    </div>
-                    <div class="mb-2">
-                        <label for="">Email</label>
-                        <input type="email" name="email" value="<%= e %>" id=""
-                            placeholder="abc@gmail.com" class="form-control"
-                            autocomplete="off" required>
-                    </div>
-                    <div class="mb-2">
-                        <label for="">Mobile no</label>
-                        <input type="number" name="phone" id="" class="form-control"
-                            autocomplete="off" required>
-                    </div>
-                    <div class="mb-2">
-                        <label for="">D.O.B</label>
-                        <input type="date" name="dob" id="" class="form-control"
-                            autocomplete="off" required>
-                    </div>
-                    <div class="mb-2">
-                        <label for="">Address</label>
-                        <textarea name="address" id="" class="form-control" autocomplete="off"
-                            required></textarea>
-                    </div>
-                    <div class="mb-2">
-                        <label for="">Gender</label>
-                        <select name="gender" id="" class="form-control" autocomplete="off"
-                            required>
-                            <option value="">select</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Others">Others</option>
-                        </select>
+            <div class="mb-2">
+              <label for="">Email</label>
+              <input type="email" name="email" value="<%= email %>" id="" placeholder="abc@gmail.com"
+                class="form-control" autocomplete="off" required>
+            </div>
+            <div class="mb-2">
+              <label for="">Mobile no</label>
+              <input type="number" name="phone" id="" class="form-control" autocomplete="off" required>
+            </div>
+            <div class="mb-2">
+              <label for="">D.O.B</label>
+              <input type="date" name="dob" id="" class="form-control" autocomplete="off" required>
+            </div>
+            <div class="mb-2">
+              <label for="">Address</label>
+              <textarea name="address" id="" class="form-control" autocomplete="off" required></textarea>
+            </div>
+            <div class="mb-2">
+              <label for="">Gender</label>
+              <select name="gender" id="" class="form-control" autocomplete="off" required>
+                <option value="">select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Others">Others</option>
+              </select>
 
-                    </div>
-                    <div class="mb-2">
-                        <label for="">Education</label>
-                        <select name="education" id="" class="form-control" autocomplete="off"
-                            required>
-                            <option value="">Select</option>
-                            <option value="Graduation">Graduation</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label for="">Course</label>
-                        <input type="text" name="course" id="" value="B.Tech" class="form-control" readonly autocomplete="off" required>
-                    </div>
-                    <div class="mb-2">
-                        <button class="btn btn-info text-center"
-                            type="submit">Submit</button>
-                    </div>
-                </form>
-            </div><!--modal body ends-->
-        </div><!--model content-->
+            </div>
+            <div class="mb-2">
+              <label for="">Education</label>
+              <select name="education" id="" class="form-control" autocomplete="off" required>
+                <option value="">Select</option>
+                <option value="Graduation">Graduation</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="">Course</label>
+              <input type="text" name="course" id="" value="B.Tech" class="form-control" readonly autocomplete="off"
+                required>
+            </div>
+            <div class="mb-2">
+              <button class="btn btn-info text-center" type="submit">Submit</button>
+            </div>
+          </form>
+        </div><!--modal body ends-->
+      </div><!--model content-->
     </div><!--model dialog end-->
-</div><!--model fade end-->
-<%-include("./footer.ejs") %>
+  </div><!--model fade end-->
+  <%-include("./footer.ejs") %>
