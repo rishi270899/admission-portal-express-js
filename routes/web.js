@@ -50,5 +50,9 @@ route.get("/adminView/:id",checkUseAuth,authRoles("admin"),AdminController.admin
 route.get("/adminEdit/:id",checkUseAuth,authRoles("admin"),AdminController.adminEdit);~
 route.get("/adminDel/:id",checkUseAuth,authRoles("admin"),AdminController.adminDel);
 route.post("/update_status/:id",checkUseAuth,authRoles("admin"),AdminController.updatestatus);
+route.get("/admin/chngpass", checkUseAuth, authRoles('admin'), AdminController.chngpass)
+route.post("/upadmPassword", checkUseAuth, authRoles('admin'), AdminController.upadmPassword)
+route.get("/admin/updateProfile" ,checkUseAuth, authRoles('admin'), AdminController.admProfile)
+route.post("/upadmProfile", checkUseAuth, authRoles('admin'), AdminController.upadmProfile)
 
 module.exports = route;

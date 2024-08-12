@@ -20,7 +20,7 @@ class CourseController {
         user_id: id,
       });
       await result.save();
-      this.sendMail(name, course, email);
+      this.sendEmail(name, course, email);
       res.redirect("/courseDisplay");
     } catch (error) {
       console.log(error);
@@ -37,7 +37,7 @@ class CourseController {
         name: name,
         image: image,
         email: email,
-        data: data,
+        d: data,
         msg: req.flash("success"),
       });
     } catch (error) {
@@ -56,7 +56,7 @@ class CourseController {
         name: name,
         image: image,
         email: email,
-        data: data,
+        d: data,
       });
     } catch (error) {
       console.log(error);
@@ -73,7 +73,7 @@ class CourseController {
         name: name,
         image: image,
         email: email,
-        data: data,
+        d: data,
       });
     } catch (error) {
       console.log(error);

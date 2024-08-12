@@ -77,9 +77,10 @@ class FrontController {
     }
   };
 
-  static team = async (req, res) => {
+  static logout = async (req, res) => {
     try {
-      res.send("team");
+      res.clearCookie("Token");
+      res.send("/");
     } catch (error) {
       console.log(error);
     }
@@ -116,13 +117,16 @@ class FrontController {
             });
             const userdata = await result.save();
             if (userdata) {
-              const token = jwt.sign({ ID: userdata._id }, "rishigoyal@27");
+              var token = jwt.sign({ ID: userdata._id }, "rishigoyal@27");
 
               // var token = jwt.sign({ ID: user._id }, "rishigoyal@27");
               // console.log(token)
-              res.cookie("token", token);
+              res.cookie("Token", token);
               this.sendVerifymail(name, email, userdata._id);
-              req.flash("error", "Registration Success! Please Login");
+              req.flash("error", "Registration Success! Please Verify mail");
+              res.redirect("/register");
+            } else {
+              req.flash("error", "Not Register.");
               res.redirect("/register");
             }
             req.flash("success", "Register success plz login.");
