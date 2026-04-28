@@ -7,11 +7,7 @@ const jwt = require("jsonwebtoken");
 const nodeMailer = require("nodemailer");
 const randomstring = require("randomstring");
 
-cloudinary.config({
-  cloud_name: "dyxjmoreb",
-  api_key: "595882299239783",
-  api_secret: "OJod9Gs00wDZv6As9mmwp4WujSA",
-});
+
 class FrontController {
   static login = async (req, res) => {
     try {
