@@ -3,11 +3,7 @@ const UserNodel = require("../models/user")
 const nodemailer = require("nodemailer");
 const cloudinary = require('cloudinary');
 const UserModel = require("../models/user");
-cloudinary.config({
-  cloud_name: "dyxjmoreb",
-  api_key: "595882299239783",
-  api_secret: "OJod9Gs00wDZv6As9mmwp4WujSA",
-});
+
 
 class AdminController {
   static dashboard = async (req, res) => {
